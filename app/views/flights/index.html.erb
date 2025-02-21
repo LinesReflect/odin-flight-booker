@@ -20,4 +20,8 @@
         <%= form.label :departure_timestamp, "Departure Date:" %>
         <%= form.select :departure_timestamp, Date.today..6.months.from_now %>
     </div>
+
+    <div>
+        <%= form.submit "Search" %>
+    </div>
 <% end %>
