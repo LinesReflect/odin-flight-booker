@@ -1,6 +1,6 @@
 <h1>Search Flights</h1>
 
-<%= form_with url: root_path, method: :get do |form| %>
+<%= form_with url: flights_path, method: :get do |form| %>
     <div>
         <%= form.label :departure_airport_id, "Leaving from:" %>
         <%= form.collection_select :departure_airport_id, Airport.order(:airport_code), :id, :airport_code %>
@@ -25,3 +25,36 @@
         <%= form.submit "Search" %>
     </div>
 <% end %>
+
+<div>
+    <h2>Search Results:</h2>
+    <% if @searched_flights.empty? %>
+        <p>No upcoming flights match</p>
+    <% else %>
+        <%= form_with url: flights_path, method: :get do |form| %>
+            <%= form.collection_radio_buttons(:flight_id, @searched_flights.order(:departure_airport_id), :id, :flight_departure_to_destination_name) do |flight| %>
+                <div>
+                    <%= flight.radio_button %>
+                    <%= flight.label %>
+                </div>
+            <% end %>
+            <%= form.submit "Book Flight" %>
+        <% end %>
+        <ol>
+            <% @searched_flights.each do |flight| %>
+                <li> From: <%= flight.departure_airport.airport_code %> To: <%= flight.arrival_airport.airport_code %> </li>
+            <% end %>
+        </ol>
+    <% end %>
+</div>
+
+<div>
+    <% if @searched_flights.empty? %>
+        <h2>All Flights</h2>
+        <ol>
+            <% @flights.each do |flight| %>
+                <li> From: <%= flight.departure_airport.airport_code %> To: <%= flight.arrival_airport.airport_code %> </li>
+            <% end %>
+        </ol>
+    <% end %>
+</div>
