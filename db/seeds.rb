@@ -5,3 +5,11 @@
 [ "ATL", "LAX", "DFW", "DEN", "ORD", "LAS", "IAH", "JFK", "MIA" ].each do |code|
   Airport.find_or_create_by!(code: code)
 end
+
+Airport.all.each do |departure_airport|
+  Airport.all.each do |arrival_airport|
+    next if departure_airport == arrival_airport
+
+    Flight.find_or_create_by!(departure_airport_id: departure_airport.id, arrival_airport_id: arrival_airport.id)
+  end
+end
