@@ -1,0 +1,31 @@
+<h1>Flight Booker</h1>
+
+<h2>Flight Search</h2>
+
+<%= form_with url: root_path do |f| %>
+
+    <div>
+        <%= f.label :departure_airport, "Depart From:"%>
+        <%= f.collection_select(:departure_airport, Airport.all, :id, :code) %>
+    </div><br/>
+
+    <div>
+        <%= f.label :arrival_airport, "Arrive At:"%>
+        <%= f.collection_select(:arrival_airport, Airport.all, :id, :code) %>
+    </div><br/>
+
+    <div>
+        <%= f.label :passenger_count, "Passengers:"%>
+        <%= f.select(:passenger_count, 1..4) %>
+    </div><br/>
+
+    <div>
+        <%= f.label :departure_date, "Departure Date:"%>
+        <%= f.collection_select(:departure_date, Flight.distinct_days.sort_by { |flight| flight.departure_date}, :departure_date, "format_departure_date") %>
+    </div><br/>
+
+    <div>
+        <%= f.submit "Search" %>
+    </div>
+
+<% end %>
