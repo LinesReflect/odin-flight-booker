@@ -6,6 +6,10 @@ class Flight < ApplicationRecord
     self.departure_date.strftime("%A, %B %d, %Y")
   end
 
+  def departure_date_to_date
+    self.departure_date.to_date
+  end
+
   def self.distinct_days
     flights_distinct_days = []
     Flight.all.each do |f|
