@@ -2,30 +2,46 @@
 
 <h2>Flight Search</h2>
 
-<%= form_with url: root_path do |f| %>
+<%= form_with url: root_path, method: "GET" do |f| %>
 
     <div>
         <%= f.label :departure_airport, "Depart From:"%>
-        <%= f.collection_select(:departure_airport, Airport.all, :id, :code) %>
+        <%= f.collection_select(:departure_airport, Airport.all, :id, :code, selected: params[:departure_airport]) %>
     </div><br/>
 
     <div>
         <%= f.label :arrival_airport, "Arrive At:"%>
-        <%= f.collection_select(:arrival_airport, Airport.all, :id, :code) %>
+        <%= f.collection_select(:arrival_airport, Airport.all, :id, :code, selected: params[:arrival_airport]) %>
     </div><br/>
 
     <div>
         <%= f.label :passenger_count, "Passengers:"%>
-        <%= f.select(:passenger_count, 1..4) %>
+        <%= f.select(:passenger_count, 1..4, selected: params[:passenger_count]) %>
     </div><br/>
 
     <div>
         <%= f.label :departure_date, "Departure Date:"%>
-        <%= f.collection_select(:departure_date, Flight.distinct_days.sort_by { |flight| flight.departure_date}, :departure_date, "format_departure_date") %>
+        <%= f.collection_select(:departure_date, Flight.distinct_days.sort_by { |flight| flight.departure_date}, "departure_date_to_date", "format_departure_date", selected: params[:departure_date]) %>
     </div><br/>
 
     <div>
         <%= f.submit "Search" %>
     </div>
 
+<% end %>
+
+<% if params[:departure_airport].present? && @flight_search_results.present? %>
+    <h2>Found Flights:</h2>
+    <ul>
+        <% @flight_search_results.each do |flight| %>
+            <li>
+                <p>Flight #<%=flight.id%> - From: <%= flight.departure_airport.code %> To: <%= flight.arrival_airport.code %> Duration: <%= flight.duration_hrs %> hour(s)</p>
+            </li>
+        <% end %>
+    </ul>
+<% elsif !params[:departure_airport].nil? && !@flight_search_results.present? %>
+    <h2>Found Flights:</h2>
+    <p>No flights match the search parameters...</p>
+<% else %>
+    <p>Begin your flight search by filling out the fields above ⤴</p>
 <% end %>
