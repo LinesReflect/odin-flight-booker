@@ -1,1 +1,27 @@
-<h1>Flight </h1>
+<h1>Flight #<%= @flight.id %> Booking Form</h1>
+
+<%= form_with model: @booking do |f| %>
+
+    <div>
+        <%= f.label :flight, "Flight #: #"%>
+        <%= f.collection_select :flight, Flight.all, :id, :id, { selected: @flight.id },  disabled: "true"%>
+    </div><br/>
+
+    <div>
+        <%= f.label :departure_airport, "Depart from: "%>
+        <%= f.collection_select :departure_airport, Airport.all, :id, :code, { selected: @flight.departure_airport.id },  disabled: "true"%>
+    </div><br/>
+
+    <div>
+        <%= f.label :arrival_airport, "Arrive at: "%>
+        <%= f.collection_select :arrival_airport, Airport.all, :id, :code, { selected: @flight.arrival_airport.id },  disabled: "true"%>
+    </div><br/>
+
+    <div>
+        <%= f.label :departure_date, "Departure date: "%>
+        <%= f.collection_select :departure_date, Flight.all, :departure_date, "format_departure_date", { selected: @flight.departure_date },  disabled: "true"%>
+    </div><br/>
+
+    <%= f.submit "Book" %>
+
+<% end %>
