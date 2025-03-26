@@ -32,13 +32,17 @@
 
 <% if params[:departure_airport].present? && @flight_search_results.present? %>
     <h2>Found Flights:</h2>
-    <ul>
-        <% @flight_search_results.each do |flight| %>
-            <li>
-                <p>Flight #<%=flight.id%> - From: <%= flight.departure_airport.code %> To: <%= flight.arrival_airport.code %> Duration: <%= flight.duration_hrs %> hour(s)</p>
-            </li>
-        <% end %>
-    </ul>
+    <%= form_with url: new_booking_path , method: "GET" do |f| %>
+
+        <div>
+            <%= f.collection_radio_buttons :flight_id, @flight_search_results, :id, "format_flight_radio_label" %>
+        </div><br/>
+
+        <div>
+            <%= f.submit "Start Booking" %>
+        </div>
+
+    <% end %>
 <% elsif !params[:departure_airport].nil? && !@flight_search_results.present? %>
     <h2>Found Flights:</h2>
     <p>No flights match the search parameters...</p>

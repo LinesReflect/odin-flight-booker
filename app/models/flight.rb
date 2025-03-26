@@ -19,4 +19,8 @@ class Flight < ApplicationRecord
     end
     flights_distinct_days
   end
+
+  def format_flight_radio_label
+    "Flight ##{self.id}: #{self.departure_airport.code} → #{self.arrival_airport.code} Duration: #{self.duration_hrs} hour(s) "
+  end
 end
