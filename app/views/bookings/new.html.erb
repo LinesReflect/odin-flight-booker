@@ -22,6 +22,20 @@
         <%= f.collection_select :departure_date, Flight.all, :departure_date, "format_departure_date", { selected: @flight.departure_date },  disabled: "true"%>
     </div><br/>
 
+    <ol>
+        <%= f.fields_for :passengers do |sub_form| %>
+            <li>
+                <div>
+                    <%= sub_form.label :name, "Name: " %>
+                    <%= sub_form.text_field :name %>
+
+                    <%= sub_form.label :email, "E-mail: " %>
+                    <%= sub_form.text_field :email %>
+                </div>
+            </li><br/>
+        <% end %>
+    </ol>
+
     <%= f.submit "Book" %>
 
 <% end %>
