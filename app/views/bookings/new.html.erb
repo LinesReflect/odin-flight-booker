@@ -3,8 +3,12 @@
 <%= form_with model: @booking do |f| %>
 
     <div>
+        <%= f.hidden_field :flight_id, value: @flight.id %>
+    </div>
+
+    <div>
         <%= f.label :flight, "Flight #: #"%>
-        <%= f.collection_select :flight, Flight.all, :id, :id, { selected: @flight.id },  disabled: "true"%>
+        <%= f.collection_select :flight, Flight.all, :id, :id, { selected: @flight.id }, disabled: "true"%>
     </div><br/>
 
     <div>
