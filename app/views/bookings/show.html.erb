@@ -1,6 +1,6 @@
-<h1>Booking #<%= @booking.id %> Details</h1>
+<h1>Booking #<%= @booking.id %></h1>
 
-<h2>Flight Details</h2>
+<h2>Flight Information</h2>
 
 <p>Flight #: #<%= @booking.flight_id %></p>
 
@@ -10,9 +10,9 @@
 
 <p>Arriving at: <%= @booking.flight.arrival_airport.code %></p>
 
-<p>Duration: <%= @booking.flight.duration_hrs %>hr(s)</p>
+<p>Duration: ~<%= @booking.flight.duration_hrs %>hr(s)</p>
 
-<h2>Passengers</h2>
+<h2>Passenger Information</h2>
 
 <ol>
     <% @booking.passengers.each do |passenger| %>
