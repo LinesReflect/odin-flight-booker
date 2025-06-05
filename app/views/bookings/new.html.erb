@@ -26,20 +26,41 @@
         <%= f.collection_select :departure_date, Flight.all, :departure_date, "format_departure_date", { selected: @flight.departure_date },  disabled: "true"%>
     </div><br/>
 
-    <ol>
-        <%= f.fields_for :passengers do |sub_form| %>
-            <li>
-                <div>
-                    <%= sub_form.label :name, "Name: " %>
-                    <%= sub_form.text_field :name %>
+    <div data-controller="passenger">
+        <ol data-passenger-target="passengerList">
+            <%= f.fields_for :passengers do |sub_form| %>
+                <li>
+                    <div style="display: flex;">
+                        <%= sub_form.label :name, "Name: " %>
+                        <%= sub_form.text_field :name %>
 
-                    <%= sub_form.label :email, "E-mail: " %>
-                    <%= sub_form.text_field :email %>
-                </div>
-            </li><br/>
-        <% end %>
-    </ol>
+                        <%= sub_form.label :email, "E-mail: " %>
+                        <%= sub_form.text_field :email %>
+                    </div>
+                </li><br/>
+            <% end %>
+        </ol>
+        <div>
+            <button type="button" data-passenger-target="addPassengerButton" data-action="click->passenger#addPassenger">Add Passenger</button><br/>
 
-    <%= f.submit "Book" %>
+            <template data-passenger-target="template">
+                <%= f.fields_for 'passengers_attributes[]', Passenger.new, index: "__INDEX__" do |sub_form| %>
+                    <li>
+                        <div style="display: flex;">
+                            <%= sub_form.label :name, "Name:" %>
+                            <%= sub_form.text_field :name %>
+                        
+                            <%= sub_form.label :email, "E-mail: " %>
+                            <%= sub_form.text_field :email %>
+                        </div>
+                    </li><br/>
+                <% end %>
+            </template>
+        </div>
+    </div>
+
+    <div>
+        <%= f.submit "Book" %>
+    </div>
 
 <% end %>
