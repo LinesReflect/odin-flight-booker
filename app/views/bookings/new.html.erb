@@ -27,35 +27,42 @@
     </div><br/>
 
     <div data-controller="passenger">
-        <ol data-passenger-target="passengerList">
+        <ol data-passenger-target="passengerList" style="display: flex; flex-direction: column; gap: 20px;">
             <%= f.fields_for :passengers do |sub_form| %>
                 <li>
-                    <div style="display: flex;">
+                    <div style="display: flex; gap: 5px;">
                         <%= sub_form.label :name, "Name: " %>
                         <%= sub_form.text_field :name %>
 
                         <%= sub_form.label :email, "E-mail: " %>
                         <%= sub_form.text_field :email %>
+
+                        <button class="remove-passenger-button"  type="button" data-passenger-target="removePassengerButton" data-action="click->passenger#removePassenger">- Remove Passenger</button>
                     </div>
-                </li><br/>
+                </li>
             <% end %>
         </ol>
-        <div>
-            <button type="button" data-passenger-target="addPassengerButton" data-action="click->passenger#addPassenger">Add Passenger</button><br/>
 
+        <div>
             <template data-passenger-target="template">
                 <%= f.fields_for 'passengers_attributes[]', Passenger.new, index: "__INDEX__" do |sub_form| %>
                     <li>
-                        <div style="display: flex;">
+                        <div style="display: flex; gap: 5px;">
                             <%= sub_form.label :name, "Name:" %>
                             <%= sub_form.text_field :name %>
                         
                             <%= sub_form.label :email, "E-mail: " %>
                             <%= sub_form.text_field :email %>
+
+                            <button class="remove-passenger-button" type="button" data-passenger-target="removePassengerButton" data-action="click->passenger#removePassenger">- Remove Passenger</button>
                         </div>
-                    </li><br/>
+                    </li>
                 <% end %>
             </template>
+        </div>
+
+        <div>
+            <button type="button" data-passenger-target="addPassengerButton" data-action="click->passenger#addPassenger">Add Passenger</button>
         </div>
     </div>
 
