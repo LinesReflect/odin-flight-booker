@@ -1,0 +1,14 @@
+Hello <%= @user.name %>!
+
+This is a confirmation email for Booking#<%= @booking.id %>
+
+==================================================================
+
+Booking#<%= @booking.id %> details:
+
+Flight #: #<%= @booking.flight_id %>
+Departure date: <%= @booking.flight.format_departure_date%>
+Arriving at: <%= @booking.flight.arrival_airport.code %>
+Duration: ~<%= @booking.flight.duration_hrs %>hr(s)
+
+Thank you for flying with us!

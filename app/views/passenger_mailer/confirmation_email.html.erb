@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Flight Booking Confirmation</title>
+</head>
+<body>
+    <h1>Hello <%= @user.name %>!</h1>
+
+    <p>This is a confirmation email for Booking#<%= @booking.id %></p>
+
+    <h2>Booking#<%= @booking.id %> details:</h2>
+
+    <div>
+        <p>Flight #: #<%= @booking.flight_id %></p>
+        <p>Departure date: <%= @booking.flight.format_departure_date%>
+        <p>Departing from: <%= @booking.flight.departure_airport.code %></p>
+        <p>Arriving at: <%= @booking.flight.arrival_airport.code %></p>
+        <p>Duration: ~<%= @booking.flight.duration_hrs %>hr(s)</p>
+    </div>
+
+    <p>Thank you for flying with us!</p>
+</body>
+</html>
