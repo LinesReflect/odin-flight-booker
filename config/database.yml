@@ -40,7 +40,7 @@ development:
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
-  #port: 5432
+  # port: 5432
 
   # Schema search path. The server defaults to $user,public
   #schema_search_path: myapp,sharedapp,public
@@ -57,6 +57,8 @@ development:
 test:
   <<: *default
   database: odin_flight_booker_test
+  host: localhost
+  encoding: unicode
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -81,18 +83,4 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: odin_flight_booker_production
-    username: odin_flight_booker
-    password: <%= ENV["ODIN_FLIGHT_BOOKER_DATABASE_PASSWORD"] %>
-  cache:
-    <<: *primary_production
-    database: odin_flight_booker_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *primary_production
-    database: odin_flight_booker_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *primary_production
-    database: odin_flight_booker_production_cable
-    migrations_paths: db/cable_migrate
+    url: <%= ENV['DATABASE_URL'] %>
