@@ -31,16 +31,16 @@ development:
   #username: odin_flight_booker
 
   # The password associated with the PostgreSQL role (username).
-  #password:
+  password: "ky8xXCnuHx7J9XgX55WSoOcotCwqS8Ri"
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
   # domain sockets, so uncomment these lines.
-  #host: localhost
+  host: /run/postgresql
 
   # The TCP port the server listens on. Defaults to 5432.
   # If your server runs on a different port number, change accordingly.
-  # port: 5432
+  port: 5432
 
   # Schema search path. The server defaults to $user,public
   #schema_search_path: myapp,sharedapp,public
@@ -81,23 +81,20 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  primary: &primary_production
-    <<: *default
-    database: odin_flight_booker_production
-    username: odin_flight_booker
-    password: <%= ENV["ODIN_FLIGHT_BOOKER_DATABASE_PASSWORD"] %>
+  primary:
+    url: <%= ENV['DATABASE_URL'] %>
+
   cache:
-    <<: *default
-    <<: *primary_production
+    url: <%= ENV['DATABASE_URL'] %>
     database: odin_flight_booker_production_cache
     migrations_paths: db/cache_migrate
+
   queue:
-    <<: *default
-    <<: *primary_production
+    url: <%= ENV['DATABASE_URL'] %>
     database: odin_flight_booker_production_queue
     migrations_paths: db/queue_migrate
+
   cable:
-    <<: *default
-    <<: *primary_production
+    url: <%= ENV['DATABASE_URL'] %>
     database: odin_flight_booker_production_cable
-    migrations_paths: db/cable_migrate  
+    migrations_paths: db/cable_migrate 
